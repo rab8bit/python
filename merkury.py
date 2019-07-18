@@ -4,6 +4,7 @@ import datetime
 from bs4 import BeautifulSoup
 
 months = {'января':'1','февраля':'2','марта':'3','апреля':'4','мая':'5','июня':'6','июля':'7','августа':'8','сентября':'9','октября':'10','ноября':'11','декабря':'12'}
+key_words=['О плановых работах по обслуживанию оборудования ВетИС','Об очередном обновлении']
 current_date = [datetime.datetime.now().day , datetime.datetime.now().month , datetime.datetime.now().year ]
 url="http://vetrf.ru/vetrf/news"
 head = {
@@ -21,5 +22,5 @@ for news in news_list:
     news_date = news.find('span',{'class':'conn-date'}).text.split()
     news_date = [news_date[0], months[news_date[1]],news_date[2]]
     if current_date == news_date :
-        if "О плановых работах по обслуживанию оборудования ВетИС" in news_desc:
-            print("Новость: {0} \n <a href={1}>подробнее</a>".format(news_desc,news_link)) 
+        if any( key_word in news_desc for key_word in key_words):
+            print("\n Новость: {0} \n http://vetrf.ru{1}".format(news_desc,news_link)) 

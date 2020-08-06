@@ -24,15 +24,13 @@ def find_new(new_div):
     return nws_link,nws_desc,nws_date
 
 def maching_news(nws_lst):
-    #print("current date",current_date)
     for news in nws_lst:
         news_link,news_desc,news_date = find_new(news)
-        #print(news_date)
         if current_date == news_date :
-            #print('news date',news_date)
+            
             if any( key_word in news_desc for key_word in key_words):
                 current_news.append([news_desc,'http://vetrf.ru'+news_link])
-                #print("\n Новость: {0} \n http://vetrf.ru{1}".format(news_desc,news_link))
+            
     return current_news
 
 response=requests.get(url,head)
@@ -50,7 +48,6 @@ try:
   f.write(str(len(curnews)))
 except:
   f = open("/tmp/check_merkury_news.dat","w")
-  #print(*curnews, sep='\n')
   for n in curnews:
     print(*n, sep='\n')
   f.write(str(len(curnews)))
